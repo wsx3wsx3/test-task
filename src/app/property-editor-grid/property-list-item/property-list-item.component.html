@@ -1,0 +1,8 @@
+
+<p class="property-name" (click)="toggleSettingsOpen()">
+  <span>{{getArrow()}}</span>
+  {{property.name}}
+</p>
+<div class="settings" *ngIf="isSettingsOpen">
+  <app-setting *ngFor="let setting of property.settings; trackBy: trackById" [setting]="setting"></app-setting>
+</div>
