@@ -1,2 +1,6 @@
-<app-property-editor-grid [properties]="properties"></app-property-editor-grid>
-
+<app-property-editor-grid [properties]="properties" *ngIf="!isLoading else preloader"></app-property-editor-grid>
+<ng-template #preloader>
+    <p>
+        Loading...
+    </p>
+</ng-template>
