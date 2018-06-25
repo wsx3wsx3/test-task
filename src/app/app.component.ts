@@ -78,8 +78,6 @@ export class AppComponent implements OnInit {
 
       const newSetting = {...property.settings[idx], value: e.value};
       property.settings.splice(idx, 1, newSetting);
-
-      console.log(this.properties);
     });
     
   }
