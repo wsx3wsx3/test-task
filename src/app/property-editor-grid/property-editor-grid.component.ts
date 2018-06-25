@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Property } from './../../core';
+import { Component, OnInit, Input, } from '@angular/core';
+import { Property } from './../core/models';
 
 
 
@@ -10,7 +10,6 @@ import { Property } from './../../core';
 })
 export class PropertyEditorGridComponent implements OnInit {
   @Input() properties: Property[];
-
 
   constructor() { }
 

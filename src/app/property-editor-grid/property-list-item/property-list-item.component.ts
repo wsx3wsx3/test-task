@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Property } from '../../core';
+import { Property } from '../../core/models';
 
 @Component({
   selector: 'app-property-list-item',

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Property } from './core';
+import { PropertyEditorGridService } from './core/property-editor-grid.service';
+import { of, Observable } from 'rxjs';
+import { delay, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +11,15 @@ import { Property } from './core';
 })
 export class AppComponent implements OnInit {
   properties: Property[];
+  isLoading: boolean;
 
+  constructor(private peg_s: PropertyEditorGridService) {
+
+  }
+  
   ngOnInit() {
     // TODO -> emulate getting from server in service
-    this.properties = [
+    const obs = of([
       {
         id: 1,
         name: 'Prop1',
@@ -52,7 +60,26 @@ export class AppComponent implements OnInit {
           }
         ]
       }
-    ];
+    ]);
+    this.isLoading = true;
+    obs.pipe(
+      delay(1500),
+      finalize(() => {
+        this.isLoading = false;
+      })
+    ).subscribe(res => this.properties = res);
+
+    this.peg_s.changedSetting$.subscribe((e) => {
+      const property = this.properties.find(pr => pr.id === e.groupId);
+      if (!property) return;
+
+      const idx = property.settings.findIndex(s => s.id === e.id);
+      if (idx === -1) return;
+
+      const newSetting = {...property.settings[idx], value: e.value};
+      property.settings.splice(idx, 1, newSetting);
+    });
+    
   }
 
 }
